@@ -2,6 +2,16 @@ import express, {json, urlencoded} from 'express'
 import { RegisterRoutes } from "./routes";
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swagger.json'
+import { dataSource } from './app-data-source';
+
+dataSource
+    .initialize()
+    .then(() => {
+        console.log("Data Source has been initialized.")
+    })
+    .catch((err) => {
+        console.error("Error during Data Source initialization:", err)
+    })
 
 const port = process.env.PORT || 3000
 
