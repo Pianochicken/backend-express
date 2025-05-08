@@ -13,4 +13,31 @@ export class UserRepository {
     
         return result
     }
+
+    public async getUsers():Promise<User[]>{
+
+        const result = await this.userRepository.find({})
+        if (!result) {
+            throw new Error(`User not found`);
+        }
+        return result
+    }
+
+    public async getUserById(id: number):Promise<User>{
+
+        const result = await this.userRepository.findOneBy({ id })
+        if (!result) {
+            throw new Error(`User with id ${id} not found`);
+        }
+        return result
+    }
+
+    public async getUserByEmail(email: string):Promise<User>{
+        const result = await this.userRepository.findOneBy({ email })
+        
+        if (!result) {
+            throw new Error(`User with email ${email} not found`);
+        }
+        return result
+    }
 }

@@ -10,12 +10,22 @@ export class UserService {
     return result
   }
 
-  public getUserById(id: number) {
-    return {
-      id: id,
-      name: 'Hi',
-      email: 'Hi@hi.com',
-      password: '12345'
-    };
+  public getUsers() {
+    const result = this.userRepository.getUsers()
+
+    return result
   }
+
+  public getUserById(id: number) {
+    const result = this.userRepository.getUserById(id)
+
+    return result
+  }
+
+  public getUserByEmail(email: string) {
+    const result = this.userRepository.getUserByEmail(email)
+
+    return result
+  }
+
 }

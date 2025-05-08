@@ -4,6 +4,7 @@ import {
     Get,
     Path,
     Post,
+    Query,
     Route,
     SuccessResponse,
     Tags,
@@ -13,14 +14,29 @@ import { UserService } from "../service/userService";
 
 const userService = new UserService
 
-@Route("user")
+@Route("users")
 @Tags("User")
-export class UserController extends Controller {
-    @Get("{id}")
-    public async getUser(
+export class UserController extends Controller {    
+    @Get("")
+    public async getUsers(
+    ): Promise<User[]> {
+        const result = userService.getUsers()
+        return result;
+    }
+
+    @Get("id/{id}")
+    public async getUserById(
         @Path() id: number,
     ): Promise<User> {
         const result = userService.getUserById(id)
+        return result;
+    }
+
+    @Get("email/{email}")
+    public async getUserByEmail(
+        @Path() email: string,
+    ): Promise<User> {
+        const result = userService.getUserByEmail(email)
         return result;
     }
 
