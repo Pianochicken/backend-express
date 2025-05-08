@@ -18,12 +18,16 @@
 					},
 					"email": {
 						"type": "string"
+					},
+					"password": {
+						"type": "string"
 					}
 				},
 				"required": [
 					"id",
 					"name",
-					"email"
+					"email",
+					"password"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -35,11 +39,15 @@
 					},
 					"email": {
 						"type": "string"
+					},
+					"password": {
+						"type": "string"
 					}
 				},
 				"required": [
 					"name",
-					"email"
+					"email",
+					"password"
 				],
 				"type": "object",
 				"additionalProperties": false

@@ -1,19 +1,21 @@
 import { CreateUserModel } from "../model/userModel";
+import { UserRepository } from "../repository/userRepository"
 
 export class UserService {
-  public getUserById(id: number) {
-    return {
-        id: id,
-        name: 'Hi',
-        email: 'Hi@hi.com'
-    };
+  public userRepository = new UserRepository
+  
+  public createUser(payload: CreateUserModel) {
+    const result = this.userRepository.createUser(payload)
+
+    return result
   }
 
-  public createUser(payload: CreateUserModel) {
+  public getUserById(id: number) {
     return {
-        id: Math.floor(Math.random() * 10000), // Random
-        name: payload.name,
-        email: payload.email
+      id: id,
+      name: 'Hi',
+      email: 'Hi@hi.com',
+      password: '12345'
     };
   }
 }
