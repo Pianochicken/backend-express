@@ -1,5 +1,5 @@
 import { dataSource } from "../app-data-source";
-import { CreateUserDto } from "../dto/user.dto";
+import { CreateUserDto, UpdateUserDto } from "../dto/user.dto";
 import { User } from "../entity/user.entity"
 
 export class UserRepository {
@@ -38,6 +38,21 @@ export class UserRepository {
         if (!result) {
             throw new Error(`User with email ${email} not found`);
         }
+        return result
+    }
+
+    public async updateUser(payload: UpdateUserDto):Promise<User>{
+        const existingUser = await this.userRepository.findOneBy( { id: payload.id });
+        if (!existingUser) {
+          throw new Error("User not found.");
+        }
+
+        existingUser.email = payload.email
+        existingUser.name = payload.name
+        existingUser.password = payload.password
+
+        const result = await this.userRepository.save(existingUser)
+        
         return result
     }
 }

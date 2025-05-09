@@ -33,6 +33,16 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UpdateUserModel": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string","required":true},
+            "email": {"dataType":"string","required":true},
+            "password": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const templateService = new ExpressTemplateService(models, {"noImplicitAdditionalProperties":"throw-on-extras","bodyCoercion":true});
 
@@ -50,6 +60,36 @@ export function RegisterRoutes(app: Router) {
 
 
     
+        const argsUserController_createUser: Record<string, TsoaRoute.ParameterSchema> = {
+                requestBody: {"in":"body","name":"requestBody","required":true,"ref":"CreateUserModel"},
+        };
+        app.post('/users',
+            ...(fetchMiddlewares<RequestHandler>(UserController)),
+            ...(fetchMiddlewares<RequestHandler>(UserController.prototype.createUser)),
+
+            async function UserController_createUser(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsUserController_createUser, request, response });
+
+                const controller = new UserController();
+
+              await templateService.apiHandler({
+                methodName: 'createUser',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsUserController_getUsers: Record<string, TsoaRoute.ParameterSchema> = {
         };
         app.get('/users',
@@ -139,30 +179,31 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        const argsUserController_createUser: Record<string, TsoaRoute.ParameterSchema> = {
-                requestBody: {"in":"body","name":"requestBody","required":true,"ref":"CreateUserModel"},
+        const argsUserController_updateUser: Record<string, TsoaRoute.ParameterSchema> = {
+                id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                requestBody: {"in":"body","name":"requestBody","required":true,"ref":"UpdateUserModel"},
         };
-        app.post('/users',
+        app.put('/users/:id',
             ...(fetchMiddlewares<RequestHandler>(UserController)),
-            ...(fetchMiddlewares<RequestHandler>(UserController.prototype.createUser)),
+            ...(fetchMiddlewares<RequestHandler>(UserController.prototype.updateUser)),
 
-            async function UserController_createUser(request: ExRequest, response: ExResponse, next: any) {
+            async function UserController_updateUser(request: ExRequest, response: ExResponse, next: any) {
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
             let validatedArgs: any[] = [];
             try {
-                validatedArgs = templateService.getValidatedArgs({ args: argsUserController_createUser, request, response });
+                validatedArgs = templateService.getValidatedArgs({ args: argsUserController_updateUser, request, response });
 
                 const controller = new UserController();
 
               await templateService.apiHandler({
-                methodName: 'createUser',
+                methodName: 'updateUser',
                 controller,
                 response,
                 next,
                 validatedArgs,
-                successStatus: 201,
+                successStatus: undefined,
               });
             } catch (err) {
                 return next(err);

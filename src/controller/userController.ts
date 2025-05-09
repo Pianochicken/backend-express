@@ -4,12 +4,13 @@ import {
     Get,
     Path,
     Post,
+    Put,
     Query,
     Route,
     SuccessResponse,
     Tags,
 } from "tsoa";
-import { User, CreateUserModel } from "../model/userModel";
+import { User, CreateUserModel, UpdateUserModel } from "../model/userModel";
 import { UserService } from "../service/userService";
 
 const userService = new UserService
@@ -17,10 +18,18 @@ const userService = new UserService
 @Route("users")
 @Tags("User")
 export class UserController extends Controller {    
+    @Post()
+    public async createUser(
+        @Body() requestBody: CreateUserModel
+    ): Promise<User> {
+        const result = await userService.createUser(requestBody)
+        return result;
+    }
+
     @Get("")
     public async getUsers(
     ): Promise<User[]> {
-        const result = userService.getUsers()
+        const result = await userService.getUsers()
         return result;
     }
 
@@ -28,7 +37,7 @@ export class UserController extends Controller {
     public async getUserById(
         @Path() id: number,
     ): Promise<User> {
-        const result = userService.getUserById(id)
+        const result = await userService.getUserById(id)
         return result;
     }
 
@@ -36,17 +45,16 @@ export class UserController extends Controller {
     public async getUserByEmail(
         @Path() email: string,
     ): Promise<User> {
-        const result = userService.getUserByEmail(email)
+        const result = await userService.getUserByEmail(email)
         return result;
     }
 
-    @SuccessResponse("201", "Created") // Custom success response
-    @Post()
-    public async createUser(
-        @Body() requestBody: CreateUserModel
+    @Put("{id}")
+    public async updateUser(
+        @Path() id: number,
+        @Body() requestBody: UpdateUserModel
     ): Promise<User> {
-        this.setStatus(201); // set return status 201
-        const result = userService.createUser(requestBody)
+        const result = await userService.updateUser(id, requestBody)
         return result;
     }
 }

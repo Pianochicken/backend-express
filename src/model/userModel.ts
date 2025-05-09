@@ -10,3 +10,9 @@ export interface CreateUserModel {
     email: string;
     password: string;
 }
+
+export interface UpdateUserModel {
+    name: string;
+    email: string;
+    password: string;
+}

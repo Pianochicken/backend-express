@@ -51,6 +51,26 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"UpdateUserModel": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -65,34 +85,11 @@
 	},
 	"paths": {
 		"/users": {
-			"get": {
-				"operationId": "GetUsers",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/User"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"User"
-				],
-				"security": [],
-				"parameters": []
-			},
 			"post": {
 				"operationId": "CreateUser",
 				"responses": {
-					"201": {
-						"description": "Created",
+					"200": {
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -117,6 +114,29 @@
 						}
 					}
 				}
+			},
+			"get": {
+				"operationId": "GetUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/User"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/users/id/{id}": {
@@ -180,6 +200,48 @@
 						}
 					}
 				]
+			}
+		},
+		"/users/{id}": {
+			"put": {
+				"operationId": "UpdateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateUserModel"
+							}
+						}
+					}
+				}
 			}
 		}
 	},

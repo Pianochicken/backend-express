@@ -1,29 +1,42 @@
-import { CreateUserModel } from "../model/userModel";
+import { UpdateUserDto } from "../dto/user.dto";
+import { CreateUserModel, UpdateUserModel } from "../model/userModel";
 import { UserRepository } from "../repository/userRepository"
 
 export class UserService {
   public userRepository = new UserRepository
   
-  public createUser(payload: CreateUserModel) {
-    const result = this.userRepository.createUser(payload)
+  public async createUser(payload: CreateUserModel) {
+    const result = await this.userRepository.createUser(payload)
 
     return result
   }
 
-  public getUsers() {
-    const result = this.userRepository.getUsers()
+  public async getUsers() {
+    const result = await this.userRepository.getUsers()
 
     return result
   }
 
-  public getUserById(id: number) {
-    const result = this.userRepository.getUserById(id)
+  public async getUserById(id: number) {
+    const result = await this.userRepository.getUserById(id)
 
     return result
   }
 
-  public getUserByEmail(email: string) {
-    const result = this.userRepository.getUserByEmail(email)
+  public async getUserByEmail(email: string) {
+    const result = await this.userRepository.getUserByEmail(email)
+
+    return result
+  }
+  
+  public async updateUser(id: number, payload: UpdateUserModel) {
+    
+    const updatePayload: UpdateUserDto = {
+      id,
+      ...payload
+    }
+
+    const result = await this.userRepository.updateUser(updatePayload)
 
     return result
   }
