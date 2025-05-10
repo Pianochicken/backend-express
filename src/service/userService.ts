@@ -41,4 +41,10 @@ export class UserService {
     return result
   }
 
+  public async deleteUserById(id: number) {
+    
+    const result = await this.userRepository.deleteUserById(id)
+
+    return result
+  }
 }

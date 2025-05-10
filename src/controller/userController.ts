@@ -1,17 +1,17 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     Path,
     Post,
     Put,
-    Query,
     Route,
-    SuccessResponse,
     Tags,
 } from "tsoa";
 import { User, CreateUserModel, UpdateUserModel } from "../model/userModel";
 import { UserService } from "../service/userService";
+import { DeleteResult } from "typeorm";
 
 const userService = new UserService
 
@@ -55,6 +55,14 @@ export class UserController extends Controller {
         @Body() requestBody: UpdateUserModel
     ): Promise<User> {
         const result = await userService.updateUser(id, requestBody)
+        return result;
+    }
+
+    @Delete("{id}")
+    public async deleteUserById(
+        @Path() id: number,
+    ): Promise<User> {
+        const result = await userService.deleteUserById(id)
         return result;
     }
 }
