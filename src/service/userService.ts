@@ -47,4 +47,11 @@ export class UserService {
 
     return result
   }
+
+  public async restoreUserById(id: number) {
+    
+    const result = await this.userRepository.restoreUserById(id)
+
+    return result
+  }
 }

@@ -56,12 +56,27 @@ export class UserRepository {
 
     public async deleteUserById(id: number):Promise<User> {
 
-        await this.getUserById(id)
+        const deleteResult = await this.userRepository.softDelete(id);
 
-        const result = await this.userRepository.softDelete(id)
+        if (deleteResult.affected === 0) {
+            throw new Error(`No active user found with id ${id} to delete.`);
+        }
 
         const deletedUser = await this.getUserById(id)
         
         return deletedUser
+    }
+
+    public async restoreUserById(id: number):Promise<User> {
+
+        const restoreResult = await this.userRepository.restore(id)
+
+        if (restoreResult.affected === 0) {
+            throw new Error(`No deleted user found with id ${id} to restore.`);
+        }
+
+        const restoredUser = await this.getUserById(id)
+        
+        return restoredUser
     }
 }

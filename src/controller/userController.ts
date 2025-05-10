@@ -65,4 +65,12 @@ export class UserController extends Controller {
         const result = await userService.deleteUserById(id)
         return result;
     }
+
+    @Put("{id}/restore")
+    public async restoreUserById(
+        @Path() id: number,
+    ): Promise<User> {
+        const result = await userService.restoreUserById(id)
+        return result;
+    }
 }
