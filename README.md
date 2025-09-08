@@ -13,8 +13,8 @@ After starting the server, you can see your api [Swagger UI](http://localhost:30
 
 TODO:
 - [x] Swagger UI
-- [ ] CRUD API
-- [ ] Authentication
+- [x] CRUD API
+- [x] Authentication
 - [ ] Unit Test
 - [ ] Error Handling
 - [ ] Logger

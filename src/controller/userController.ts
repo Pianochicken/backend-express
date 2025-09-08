@@ -7,11 +7,11 @@ import {
     Post,
     Put,
     Route,
+    Security,
     Tags,
 } from "tsoa";
 import { User, CreateUserModel, UpdateUserModel } from "../model/userModel";
 import { UserService } from "../service/userService";
-import { DeleteResult } from "typeorm";
 
 const userService = new UserService
 
@@ -19,6 +19,7 @@ const userService = new UserService
 @Tags("User")
 export class UserController extends Controller {    
     @Post()
+    @Security("jwt")
     public async createUser(
         @Body() requestBody: CreateUserModel
     ): Promise<User> {

@@ -1,12 +1,19 @@
 import { UpdateUserDto } from "../dto/user.dto";
 import { CreateUserModel, UpdateUserModel } from "../model/userModel";
 import { UserRepository } from "../repository/userRepository"
+import bcrypt from "bcryptjs";
 
 export class UserService {
   public userRepository = new UserRepository
   
   public async createUser(payload: CreateUserModel) {
-    const result = await this.userRepository.createUser(payload)
+
+    const hashedPassword = await bcrypt.hash(payload.password, 10)
+
+    const result = await this.userRepository.createUser({
+      ...payload,
+      password: hashedPassword
+    })
 
     return result
   }
