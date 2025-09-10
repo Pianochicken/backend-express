@@ -1,8 +1,10 @@
-import express, {json, urlencoded} from 'express'
+import express, {json, urlencoded, Request, Response, NextFunction} from 'express'
 import { RegisterRoutes } from "./routes";
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swagger.json'
 import { dataSource } from './app-data-source';
+import errorMiddleware from './middleware/errorMiddleware';
+import AppError from './utils/appError';
 
 dataSource
     .initialize()
@@ -33,6 +35,12 @@ class Server {
         this.app.get('/', (req, res) => {
             res.send('Hello World!');
         });
+
+        this.app.use((req: Request, res: Response, next: NextFunction) => {
+            next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+        });
+
+        this.app.use(errorMiddleware);
 
         this.app.listen(port, () => {
             console.log(`Server is running on port ${port}`);

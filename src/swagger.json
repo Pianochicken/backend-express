@@ -32,6 +32,38 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"AppError": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"stack": {
+						"type": "string"
+					},
+					"statusCode": {
+						"type": "number",
+						"format": "double"
+					},
+					"status": {
+						"type": "string"
+					},
+					"isOperational": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"name",
+					"message",
+					"statusCode",
+					"status",
+					"isOperational"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"CreateUserModel": {
 				"properties": {
 					"name": {
@@ -122,12 +154,22 @@
 			"post": {
 				"operationId": "CreateUser",
 				"responses": {
-					"200": {
-						"description": "Ok",
+					"201": {
+						"description": "Created",
 						"content": {
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AppError"
 								}
 							}
 						}
@@ -190,6 +232,16 @@
 								}
 							}
 						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AppError"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
@@ -222,6 +274,16 @@
 								}
 							}
 						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AppError"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
@@ -250,6 +312,16 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AppError"
 								}
 							}
 						}
@@ -293,6 +365,16 @@
 								}
 							}
 						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AppError"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
@@ -322,6 +404,16 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AppError"
 								}
 							}
 						}

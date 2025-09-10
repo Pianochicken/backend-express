@@ -16,6 +16,6 @@ TODO:
 - [x] CRUD API
 - [x] Authentication
 - [ ] Unit Test
-- [ ] Error Handling
+- [x] Error Handling
 - [ ] Logger
 - [ ] Dockerize

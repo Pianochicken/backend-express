@@ -1,7 +1,7 @@
-import { DeleteResult } from "typeorm";
 import { dataSource } from "../app-data-source";
 import { CreateUserDto, UpdateUserDto } from "../dto/user.dto";
 import { User } from "../entity/user.entity"
+import AppError from "../utils/appError";
 
 export class UserRepository {
 
@@ -19,7 +19,7 @@ export class UserRepository {
 
         const result = await this.userRepository.find({})
         if (!result) {
-            throw new Error(`User not found`);
+            throw new AppError(`User not found`, 404);
         }
         return result
     }
@@ -28,7 +28,7 @@ export class UserRepository {
 
         const result = await this.userRepository.findOne( { where: { id }, withDeleted: true})
         if (!result) {
-            throw new Error(`User with id ${id} not found`);
+            throw new AppError(`User with id ${id} not found`, 404);
         }
         return result
     }
@@ -37,7 +37,7 @@ export class UserRepository {
         const result = await this.userRepository.findOne({ where: { email } })
         
         if (!result) {
-            throw new Error(`User with email ${email} not found`);
+            throw new AppError(`User with email ${email} not found`, 404);
         }
         return result
     }
@@ -59,7 +59,7 @@ export class UserRepository {
         const deleteResult = await this.userRepository.softDelete(id);
 
         if (deleteResult.affected === 0) {
-            throw new Error(`No active user found with id ${id} to delete.`);
+            throw new AppError(`No active user found with id ${id} to delete.`, 404);
         }
 
         const deletedUser = await this.getUserById(id)
@@ -72,7 +72,7 @@ export class UserRepository {
         const restoreResult = await this.userRepository.restore(id)
 
         if (restoreResult.affected === 0) {
-            throw new Error(`No deleted user found with id ${id} to restore.`);
+            throw new AppError(`No deleted user found with id ${id} to restore.`, 404);
         }
 
         const restoredUser = await this.getUserById(id)
