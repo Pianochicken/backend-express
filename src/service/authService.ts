@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { LoginRequestModel, LoginResponseModel, generateTokenModel, verifyTokenModel, comparePasswordModel } from "../model/authModel";
 import { UserRepository } from "../repository/userRepository";
+import AppError from "../utils/appError";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 const JWT_EXPIRES_IN = "1h"; // Token expires in 1 hour
@@ -14,7 +15,7 @@ export class AuthService {
         const user = await this.userRepository.getUserByEmail(payload.email)
 
         if (!user) {
-            throw new Error("Invalid email or password");
+            throw new AppError("Invalid email or password", 401);
         }
 
         const isPasswordValid = await this.comparePassword({
@@ -23,7 +24,7 @@ export class AuthService {
         })
         
         if (!isPasswordValid) {
-            throw new Error("Invalid email or password");
+            throw new AppError("Invalid email or password", 401);
         }
 
         const token = this.generateToken({

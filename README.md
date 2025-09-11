@@ -15,7 +15,7 @@ TODO:
 - [x] Swagger UI
 - [x] CRUD API
 - [x] Authentication
-- [ ] Unit Test
+- [x] Unit Test
 - [x] Error Handling
 - [ ] Logger
 - [ ] Dockerize
