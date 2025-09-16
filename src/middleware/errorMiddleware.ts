@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import AppError from '../utils/appError';
+import logger from '../utils/logger';
 
 const handleCastErrorDB = (err: any) => {
   const message = `Invalid ${err.path}: ${err.value}.`;
@@ -25,6 +26,7 @@ const handleJWTExpiredError = () =>
   new AppError('Your token has expired! Please log in again.', 401);
 
 const sendErrorDev = (err: any, res: Response) => {
+  logger.error('Development Error:', { message: err.message, stack: err.stack });
   res.status(err.statusCode).json({
     status: err.status,
     error: err,
@@ -36,6 +38,8 @@ const sendErrorDev = (err: any, res: Response) => {
 const sendErrorProd = (err: any, res: Response) => {
   // Operational, trusted error: send message to client
   if (err.isOperational) {
+    // Log it as a warning, as it's not a system failure
+    logger.warn(`Operational error: ${err.message}`);
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
@@ -43,7 +47,7 @@ const sendErrorProd = (err: any, res: Response) => {
     // Programming or other unknown error: don't leak error details
   } else {
     // 1) Log error
-    console.error('ERROR 💥', err);
+    logger.error('Production Error:', { message: err.message, stack: err.stack });
 
     // 2) Send generic message
     res.status(500).json({
@@ -60,6 +64,7 @@ export default (err: any, req: Request, res: Response, next: NextFunction) => {
   if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
     error.message = err.message;
+    error.stack = err.stack;
 
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);

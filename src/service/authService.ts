@@ -3,9 +3,10 @@ import bcrypt from "bcryptjs";
 import { LoginRequestModel, LoginResponseModel, generateTokenModel, verifyTokenModel, comparePasswordModel } from "../model/authModel";
 import { UserRepository } from "../repository/userRepository";
 import AppError from "../utils/appError";
+import type { StringValue } from "ms"
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
-const JWT_EXPIRES_IN = "1h"; // Token expires in 1 hour
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN as StringValue || "1h"; // Token expires in 1 hour
 
 export class AuthService {
     public userRepository = new UserRepository

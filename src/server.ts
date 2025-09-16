@@ -1,51 +1,68 @@
-import express, {json, urlencoded, Request, Response, NextFunction} from 'express'
-import { RegisterRoutes } from "./routes";
+import express, { json, urlencoded, Request, Response, NextFunction } from 'express';
+import { RegisterRoutes } from './routes';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger.json'
+import swaggerDocument from './swagger.json';
 import { dataSource } from './app-data-source';
 import errorMiddleware from './middleware/errorMiddleware';
 import AppError from './utils/appError';
+import morgan from 'morgan';
+import logger from './utils/logger';
+import dotenv from 'dotenv';
+import 'reflect-metadata';
 
-dataSource
-    .initialize()
-    .then(() => {
-        console.log("Data Source has been initialized.")
-    })
-    .catch((err) => {
-        console.error("Error during Data Source initialization:", err)
-    })
+const port = process.env.PORT || 3000;
 
-const port = process.env.PORT || 3000
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
 class Server {
-    private app =  express();
+  private app = express();
 
-    start() {
-        this.app.use(
-            urlencoded({
-                extended: true,
-            })
-        );
-        this.app.use(json());
+  async start() {
+    // Morgan setup to redirect morgan's output to winston
+    const stream = {
+      write: (message: string) => logger.http(message.trim()),
+    };
 
-        RegisterRoutes(this.app);
+    const morganMiddleware = morgan(
+      ':method :url :status :res[content-length] - :response-time ms',
+      { stream }
+    );
 
-        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-        
-        this.app.get('/', (req, res) => {
-            res.send('Hello World!');
-        });
+    try {
+      await dataSource.initialize();
+      logger.info('Data Source has been initialized.');
 
-        this.app.use((req: Request, res: Response, next: NextFunction) => {
-            next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-        });
+      this.app.use(
+        urlencoded({
+          extended: true,
+        })
+      );
+      this.app.use(json());
 
-        this.app.use(errorMiddleware);
+      // Use morgan middleware for HTTP request logging
+      this.app.use(morganMiddleware);
 
-        this.app.listen(port, () => {
-            console.log(`Server is running on port ${port}`);
-        });
+      RegisterRoutes(this.app);
+
+      this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+      this.app.get('/', (req, res) => {
+        res.send('Hello World!');
+      });
+
+      this.app.use((req: Request, res: Response, next: NextFunction) => {
+        next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+      });
+
+      this.app.use(errorMiddleware);
+
+      this.app.listen(port, () => {
+        logger.info(`Server is running on port ${port} in ${process.env.NODE_ENV} mode`);
+      });
+    } catch (err) {
+      logger.error('Error during server startup:', err);
     }
+  }
 }
 
 const server = new Server();
