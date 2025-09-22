@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+import 'reflect-metadata';
 import express, { json, urlencoded, Request, Response, NextFunction } from 'express';
 import { RegisterRoutes } from './routes';
 import swaggerUi from 'swagger-ui-express';
@@ -7,12 +10,8 @@ import errorMiddleware from './middleware/errorMiddleware';
 import AppError from './utils/appError';
 import morgan from 'morgan';
 import logger from './utils/logger';
-import dotenv from 'dotenv';
-import 'reflect-metadata';
 
 const port = process.env.PORT || 3000;
-
-dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
 class Server {
   private app = express();

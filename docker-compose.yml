@@ -1,0 +1,30 @@
+services:
+  backend-express:
+    build:
+      context: .
+      target: prod
+    image: backend-express:latest
+    container_name: backend-express
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.production
+    environment:
+      DB_HOST: backend-express-db
+    depends_on:
+      - backend-express-db
+    restart: unless-stopped
+
+  backend-express-db:
+    image: postgres:16-alpine
+    container_name: backend-express-db
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  dbdata:
