@@ -33,7 +33,7 @@ Create a `.env.development` file by copying the example file. This will be used 
 ```bash
 cp .example.env .env.development
 ```
-Then, open `.env.development` and fill in your local database credentials.
+Then, open `.env.development` and fill in your credentials.
 
 #### For Production
 
@@ -42,7 +42,7 @@ Create a `.env.production` file. This will be used when you run `npm run start`.
 ```bash
 cp .example.env .env.production
 ```
-Then, open `.env.production` and fill in your production database credentials and a strong, unique `JWT_SECRET`.
+Then, open `.env.production` and fill in your production credentials.
 
 ## Local (without Docker)
 
@@ -66,6 +66,10 @@ This repo includes a multi-stage Dockerfile (targets: `dev`, `prod`) and two Com
 - Start (loads variables from .env.development into Compose):
 ```bash
 docker compose --env-file .env.development -f docker-compose.dev.yml up --build
+```
+- Seed initial admin (once)
+```bash
+docker compose --env-file .env.development -f docker-compose.dev.yml exec backend-express npm run seed
 ```
 - Run tests inside the dev container:
 ```bash
