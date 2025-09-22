@@ -10,7 +10,12 @@
     "dev": "cross-env NODE_ENV=development nodemon",
     "schema:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop -d src/app-data-source.ts",
     "seed": "ts-node ./src/scripts/seedAdmin.ts",
-    "seed:prod": "node ./dist/scripts/seedAdmin.js"
+    "seed:prod": "node ./dist/scripts/seedAdmin.js",
+    "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate ./src/migrations/InitSchema -d src/app-data-source.ts",
+    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d src/app-data-source.ts",
+    "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert -d src/app-data-source.ts",
+    "migration:run:prod": "node ./node_modules/typeorm/cli.js migration:run -d dist/app-data-source.js",
+    "migration:revert:prod": "node ./node_modules/typeorm/cli.js migration:revert -d dist/app-data-source.js"
   },
   "keywords": [],
   "author": "",

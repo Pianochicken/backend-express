@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { DataSource } from "typeorm";
 import path from 'path';
 
@@ -16,5 +15,9 @@ export const dataSource = new DataSource({
     ],
     // synchronize: true should only be used in development.
     // It can cause data loss in production.
-    synchronize: process.env.NODE_ENV === 'development'
+    synchronize: process.env.NODE_ENV === 'development',
+    migrations: [
+        path.join(__dirname, './migrations/*.{js,ts}')
+    ],
+    migrationsTableName: 'typeorm_migrations',
 });

@@ -11,8 +11,7 @@ A backend template built with Express.js, TypeScript, TypeORM, and JWT.
 - [x] **Error Handling**: Centralized error handling middleware.
 - [x] **Logging**: Structured logging with Winston and Morgan.
 - [x] **Dockerize**: Ready to be containerized with Docker.
-- [] **Database migrations**: Setup database with migrations.
-
+- [x] **Migrations**: Setup database with migrations.
 ## Getting Started
 
 ### 1. Installation
@@ -90,6 +89,14 @@ Notes:
 - Build and start:
 ```bash
 docker compose --env-file .env.production up --build -d
+```
+- Apply migrations (required on fresh DB)
+```bash
+docker compose --env-file .env.production exec backend-express npm run migration:run:prod
+```
+- Seed initial admin (once)
+```bash
+docker compose --env-file .env.production exec backend-express npm run seed:prod
 ```
 - Logs and stop:
 ```bash
