@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN as StringValue || "1h"; // Token expires in 1 hour
 
 export class AuthService {
-    public userRepository = new UserRepository
+    public userRepository = new UserRepository()
     
     public async login(payload: LoginRequestModel): Promise<LoginResponseModel> {
 
