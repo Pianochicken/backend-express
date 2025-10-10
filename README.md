@@ -102,6 +102,7 @@ docker compose --env-file .env.production exec backend-express npm run seed:prod
 ```bash
 docker compose logs -f backend-express
 docker compose down
+```
 
 ## API Documentation
 
