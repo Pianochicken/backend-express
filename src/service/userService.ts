@@ -4,7 +4,7 @@ import { UserRepository } from "../repository/userRepository"
 import bcrypt from "bcryptjs";
 
 export class UserService {
-  public userRepository = new UserRepository
+  public userRepository = new UserRepository()
   
   public async createUser(payload: CreateUserModel) {
 
