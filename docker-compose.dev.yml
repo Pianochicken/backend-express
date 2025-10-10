@@ -1,0 +1,34 @@
+services:
+  backend-express:
+    build:
+      context: .
+      target: dev
+    image: backend-express:dev
+    container_name: backend-express-dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.development
+    environment:
+      DB_HOST: backend-express-db
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    depends_on:
+      - backend-express-db
+    command: npm run dev
+    restart: unless-stopped
+
+  backend-express-db:
+    image: postgres:16-alpine
+    container_name: backend-express-db
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  dbdata:
