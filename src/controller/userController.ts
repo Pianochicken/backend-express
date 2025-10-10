@@ -16,7 +16,7 @@ import { User, CreateUserModel, UpdateUserModel } from "../model/userModel";
 import { UserService } from "../service/userService";
 import AppError from "../utils/appError";
 
-const userService = new UserService
+const userService = new UserService()
 
 @Route("users")
 @Tags("User")
