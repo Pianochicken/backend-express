@@ -12,9 +12,9 @@ import {
     Response,
     SuccessResponse,
 } from "tsoa";
-import { User, CreateUserModel, UpdateUserModel } from "../model/userModel";
-import { UserService } from "../service/userService";
-import AppError from "../utils/appError";
+import type { User, CreateUserModel, UpdateUserModel } from "../model/userModel.js";
+import { UserService } from "../service/userService.js";
+import AppError from "../utils/appError.js";
 
 const userService = new UserService()
 

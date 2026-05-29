@@ -2,9 +2,9 @@ import dotenv from 'dotenv';
 dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 
 import 'reflect-metadata';
-import { dataSource } from '../app-data-source';
-import { UserService } from '../service/userService';
-import { CreateUserModel } from '../model/userModel';
+import { dataSource } from '../app-data-source.js';
+import { UserService } from '../service/userService.js';
+import { CreateUserModel } from '../model/userModel.js';
 
 async function main() {
     const name = process.env.ADMIN_NAME || 'admin'
@@ -21,9 +21,16 @@ async function main() {
         password,
     };
     
-    await userService.createUser(user);
-
-    console.log(`Seeded admin user: ${email}`);
+    try {
+        await userService.createUser(user);
+        console.log(`Seeded admin user: ${email}`);
+    } catch (error: any) {
+        if (error.code === '23505') {
+            console.log(`Admin user ${email} already exists. Skipping seed.`);
+        } else {
+            throw error;
+        }
+    }
     await dataSource.destroy();
 }
 

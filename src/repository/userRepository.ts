@@ -1,7 +1,7 @@
-import { dataSource } from "../app-data-source";
-import { CreateUserDto, UpdateUserDto } from "../dto/user.dto";
-import { User } from "../entity/user.entity"
-import AppError from "../utils/appError";
+import { dataSource } from "../app-data-source.js";
+import { CreateUserDto, UpdateUserDto } from "../dto/user.dto.js";
+import { User } from "../entity/user.entity.js"
+import AppError from "../utils/appError.js";
 
 export class UserRepository {
 

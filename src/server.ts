@@ -2,14 +2,14 @@ import dotenv from 'dotenv';
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 import 'reflect-metadata';
 import express, { json, urlencoded, Request, Response, NextFunction } from 'express';
-import { RegisterRoutes } from './routes';
+import { RegisterRoutes } from './routes.js';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger.json';
-import { dataSource } from './app-data-source';
-import errorMiddleware from './middleware/errorMiddleware';
-import AppError from './utils/appError';
+import swaggerDocument from './swagger.json' with { type: "json" };
+import { dataSource } from './app-data-source.js';
+import errorMiddleware from './middleware/errorMiddleware.js';
+import AppError from './utils/appError.js';
 import morgan from 'morgan';
-import logger from './utils/logger';
+import logger from './utils/logger.js';
 
 const port = process.env.PORT || 3000;
 

@@ -12,6 +12,7 @@ A backend template built with Express.js, TypeScript, TypeORM, and JWT.
 - [x] **Logging**: Structured logging with Winston and Morgan.
 - [x] **Dockerize**: Ready to be containerized with Docker.
 - [x] **Migrations**: Setup database with migrations.
+- [x] **Modern Architecture**: Native ESM support, NodeNext resolution, and lightning-fast execution with `tsx`.
 ## Getting Started
 
 ### 1. Installation
@@ -70,6 +71,10 @@ docker compose --env-file .env.development -f docker-compose.dev.yml up --build
 ```bash
 docker compose --env-file .env.development -f docker-compose.dev.yml exec backend-express npm run seed
 ```
+- Reset Database:
+```bash
+docker compose --env-file .env.development -f docker-compose.dev.yml exec backend-express npm run schema:drop
+```
 - Run tests inside the dev container:
 ```bash
 docker compose -f docker-compose.dev.yml exec backend-express npm test
@@ -108,4 +113,5 @@ docker compose down
 
 Once the server is running, you can access the interactive API documentation via Swagger UI at:
 
-[http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)
+[http://localhost:3000/api-docs/](http://localhost:3000/api-docs/) 
+*(If you changed `PORT` in your `.env` file, replace `3000` with your custom port.)*

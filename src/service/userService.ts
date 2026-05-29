@@ -1,6 +1,6 @@
-import { UpdateUserDto } from "../dto/user.dto";
-import { CreateUserModel, UpdateUserModel } from "../model/userModel";
-import { UserRepository } from "../repository/userRepository"
+import { UpdateUserDto } from "../dto/user.dto.js";
+import { CreateUserModel, UpdateUserModel } from "../model/userModel.js";
+import { UserRepository } from "../repository/userRepository.js"
 import bcrypt from "bcryptjs";
 
 export class UserService {

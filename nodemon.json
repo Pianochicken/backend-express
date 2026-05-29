@@ -1,7 +1,7 @@
 {
   "watch": ["src"],
   "ext": "ts,json",
-  "ignore": ["dist", "node_modules"],
-  "exec": "ts-node ./src/server.ts",
+  "ignore": ["dist", "node_modules", "src/routes.ts", "src/swagger.json"],
+  "exec": "tsoa spec-and-routes && tsx ./src/server.ts",
   "legacyWatch": true
 }

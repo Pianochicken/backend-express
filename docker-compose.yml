@@ -6,11 +6,12 @@ services:
     image: backend-express:latest
     container_name: backend-express
     ports:
-      - "3000:3000"
+      - "${PORT:-3000}:${PORT:-3000}"
     env_file:
       - .env.production
     environment:
       DB_HOST: backend-express-db
+      DB_PORT: 5432
     depends_on:
       - backend-express-db
     restart: unless-stopped
@@ -18,6 +19,8 @@ services:
   backend-express-db:
     image: postgres:16-alpine
     container_name: backend-express-db
+    ports:
+      - "${DB_PORT:-5432}:5432"
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}

@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2021",                                 /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "module": "commonjs",                               /* Specify what module code is generated. */
+    "target": "es2025",                                 /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "module": "NodeNext",                               /* Specify what module code is generated. */
+    "moduleResolution": "NodeNext",                     /* Specify what module code is generated. */
+    "lib": ["es2025"],                                  /* Specify a list of libraries to include in the compilation. */
     "rootDir": "./src",                                 /* Specify the root folder within your source files. */
     "outDir": "./dist",                                   /* Specify an output folder for all emitted files. */
     "esModuleInterop": true,                            /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
@@ -12,5 +14,6 @@
     "resolveJsonModule": true,
     "strictPropertyInitialization": false,
     "emitDecoratorMetadata": true,
+    "types": ["jest", "node"]
   }
 }

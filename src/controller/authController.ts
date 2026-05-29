@@ -5,8 +5,8 @@ import {
   Route,
   Tags
 } from "tsoa";
-import { LoginRequestModel, LoginResponseModel } from "../model/authModel"
-import { AuthService } from "../service/authService";
+import type { LoginRequestModel, LoginResponseModel } from "../model/authModel.js";
+import { AuthService } from "../service/authService.js";
 
 @Route("auth")
 @Tags("Auth")

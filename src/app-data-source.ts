@@ -11,13 +11,13 @@ export const dataSource = new DataSource({
     // For production, entities should point to .js files in the dist folder.
     // For development, it can point to .ts files in the src folder.
     entities: [
-        path.join(__dirname, './entity/*.entity.{js,ts}')
+        path.join(import.meta.dirname, './entity/*.entity.{js,ts}')
     ],
     // synchronize: true should only be used in development.
     // It can cause data loss in production.
     synchronize: process.env.NODE_ENV === 'development',
     migrations: [
-        path.join(__dirname, './migrations/*.{js,ts}')
+        path.join(import.meta.dirname, './migrations/*.{js,ts}')
     ],
     migrationsTableName: 'typeorm_migrations',
 });
