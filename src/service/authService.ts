@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { LoginRequestModel, LoginResponseModel, generateTokenModel, verifyTokenModel, comparePasswordModel } from "../model/authModel";
-import { UserRepository } from "../repository/userRepository";
-import AppError from "../utils/appError";
+import { LoginRequestModel, LoginResponseModel, generateTokenModel, verifyTokenModel, comparePasswordModel } from "../model/authModel.js";
+import { UserRepository } from "../repository/userRepository.js";
+import AppError from "../utils/appError.js";
 import type { StringValue } from "ms"
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";

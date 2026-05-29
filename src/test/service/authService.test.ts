@@ -1,29 +1,29 @@
-import { AuthService } from '../../service/authService';
-import { UserRepository } from '../../repository/userRepository';
-import { User } from '../../entity/user.entity';
-import AppError from '../../utils/appError';
+import { AuthService } from '../../service/authService.js';
+import { UserRepository } from '../../repository/userRepository.js';
+import { User } from '../../entity/user.entity.js';
+import AppError from '../../utils/appError.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { LoginRequestModel } from '../../model/authModel';
+import { LoginRequestModel } from '../../model/authModel.js';
+import { jest } from '@jest/globals'
 
-// Mock dependencies
-jest.mock('../../repository/userRepository');
-jest.mock('bcryptjs');
-jest.mock('jsonwebtoken');
+// No jest.mock needed in ESM, we use spyOn and manual injection
 
 describe('AuthService', () => {
   let authService: AuthService;
   let userRepositoryMock: jest.Mocked<UserRepository>;
-  let bcryptCompareMock: jest.Mock;
-  let jwtSignMock: jest.Mock;
-  let jwtVerifyMock: jest.Mock;
+  let bcryptCompareMock: any;
+  let jwtSignMock: any;
+  let jwtVerifyMock: any;
 
   beforeEach(() => {
     // Create new mock instances for each test
-    userRepositoryMock = new UserRepository() as jest.Mocked<UserRepository>;
-    bcryptCompareMock = bcrypt.compare as jest.Mock;
-    jwtSignMock = jwt.sign as jest.Mock;
-    jwtVerifyMock = jwt.verify as jest.Mock;
+    userRepositoryMock = {
+      getUserByEmail: jest.fn()
+    } as any;
+    bcryptCompareMock = jest.spyOn(bcrypt, 'compare' as any) as any;
+    jwtSignMock = jest.spyOn(jwt, 'sign' as any) as any;
+    jwtVerifyMock = jest.spyOn(jwt, 'verify' as any) as any;
     
     // Instantiate AuthService and manually assign the mock repository
     authService = new AuthService();

@@ -1,6 +1,6 @@
 import { Request } from "express";
-import { AuthService } from "../service/authService";
-import AppError from "../utils/appError";
+import { AuthService } from "../service/authService.js";
+import AppError from "../utils/appError.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 const authService = new AuthService();

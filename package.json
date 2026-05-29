@@ -1,28 +1,29 @@
 {
   "name": "backend-express",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "src/server.ts",
   "scripts": {
     "build": "tsoa spec-and-routes && tsc",
     "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage",
     "start": "cross-env NODE_ENV=production node ./dist/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
-    "schema:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop -d src/app-data-source.ts",
-    "seed": "ts-node ./src/scripts/seedAdmin.ts",
+    "schema:drop": "tsx ./node_modules/typeorm/cli.js schema:drop -d src/app-data-source.ts",
+    "seed": "tsx ./src/scripts/seedAdmin.ts",
     "seed:prod": "node ./dist/scripts/seedAdmin.js",
-    "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate ./src/migrations/InitSchema -d src/app-data-source.ts",
-    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d src/app-data-source.ts",
-    "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert -d src/app-data-source.ts",
+    "migration:generate": "tsx ./node_modules/typeorm/cli.js migration:generate ./src/migrations/InitSchema -d src/app-data-source.ts",
+    "migration:run": "tsx ./node_modules/typeorm/cli.js migration:run -d src/app-data-source.ts",
+    "migration:revert": "tsx ./node_modules/typeorm/cli.js migration:revert -d src/app-data-source.ts",
     "migration:run:prod": "node ./node_modules/typeorm/cli.js migration:run -d dist/app-data-source.js",
     "migration:revert:prod": "node ./node_modules/typeorm/cli.js migration:revert -d dist/app-data-source.js"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@istanbuljs/nyc-config-typescript": "^1.0.0",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/morgan": "^1.9.10",
@@ -32,10 +33,10 @@
     "cross-env": "^10.1.0",
     "jest": "^30.2.0",
     "nodemon": "^3.1.11",
-    "nyc": "^17.1.0",
+    "nyc": "^18.0.0",
     "ts-jest": "^29.4.6",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^9.0.10",
@@ -47,7 +48,7 @@
     "pg": "^8.16.3",
     "swagger-ui-express": "^5.0.1",
     "tsoa": "^6.6.0",
-    "typeorm": "^0.3.28",
+    "typeorm": "^1.0.0",
     "winston": "^3.18.3"
   }
 }

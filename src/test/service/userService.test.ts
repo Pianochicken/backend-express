@@ -1,23 +1,30 @@
-import { UserService } from '../../service/userService';
-import { UserRepository } from '../../repository/userRepository';
-import { User } from '../../entity/user.entity';
-import AppError from '../../utils/appError';
+import { UserService } from '../../service/userService.js';
+import { UserRepository } from '../../repository/userRepository.js';
+import { User } from '../../entity/user.entity.js';
+import AppError from '../../utils/appError.js';
 import bcrypt from 'bcryptjs';
-import { CreateUserModel, UpdateUserModel } from '../../model/userModel';
+import { CreateUserModel, UpdateUserModel } from '../../model/userModel.js';
+import { jest } from '@jest/globals';
 
-// Mock dependencies
-jest.mock('../../repository/userRepository');
-jest.mock('bcryptjs');
+// No jest.mock needed in ESM, we use spyOn and manual injection
 
 describe('UserService', () => {
   let userService: UserService;
   let userRepositoryMock: jest.Mocked<UserRepository>;
-  let bcryptHashMock: jest.Mock;
+  let bcryptHashMock: any;
 
   beforeEach(() => {
     // Create a new mock instance for each test
-    userRepositoryMock = new UserRepository() as jest.Mocked<UserRepository>;
-    bcryptHashMock = bcrypt.hash as jest.Mock;
+    userRepositoryMock = {
+      createUser: jest.fn(),
+      getUsers: jest.fn(),
+      getUserById: jest.fn(),
+      getUserByEmail: jest.fn(),
+      updateUser: jest.fn(),
+      deleteUserById: jest.fn(),
+      restoreUserById: jest.fn()
+    } as any;
+    bcryptHashMock = jest.spyOn(bcrypt, 'hash' as any) as any;
     
     // Instantiate UserService and manually assign the mock repository
     userService = new UserService();
