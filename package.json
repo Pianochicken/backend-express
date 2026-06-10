@@ -1,6 +1,6 @@
 {
   "name": "backend-express",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "src/server.ts",
   "scripts": {
     "build": "tsoa spec-and-routes && tsc",
@@ -50,5 +50,8 @@
     "tsoa": "^6.6.0",
     "typeorm": "^1.0.0",
     "winston": "^3.18.3"
+  },
+  "overrides": {
+    "uuid": "^14.0.0"
   }
 }
